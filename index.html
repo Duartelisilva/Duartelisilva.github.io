@@ -151,7 +151,26 @@
     }
 
     /* ABOUT */
-    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+    .about-grid { display: grid; grid-template-columns: auto 1fr 1fr; gap: 3rem; align-items: start; }
+    .about-photo-wrap {
+      width: 180px; flex-shrink: 0;
+    }
+    .about-photo {
+      width: 180px; height: 220px;
+      object-fit: cover; object-position: center top;
+      border: 1px solid var(--border);
+      display: block;
+      filter: grayscale(20%);
+      transition: filter 0.3s;
+    }
+    .about-photo:hover { filter: grayscale(0%); }
+    .about-photo-placeholder {
+      width: 180px; height: 220px;
+      border: 1px dashed var(--border);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 0.5rem; color: var(--muted); font-size: 0.72rem; text-align: center;
+      background: var(--card);
+    }
     .about-text { color: var(--muted); line-height: 2; }
     .about-text p + p { margin-top: 1rem; }
     .about-text strong { color: var(--text); }
@@ -166,44 +185,118 @@
     .skill-item:hover { border-color: var(--accent); color: var(--text); }
     .skill-dot { width: 5px; height: 5px; background: var(--accent); border-radius: 50%; flex-shrink: 0; }
 
-    /* PROJECTS */
-    #projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 1px;
-      background: var(--border);
+    /* PROJECTS CAROUSEL */
+    .carousel-wrap { position: relative; }
+    .carousel-stage {
       border: 1px solid var(--border);
-    }
-    .project-card {
+      overflow: hidden;
       background: var(--card);
-      padding: 1.75rem;
-      display: flex; flex-direction: column; gap: 0.75rem;
-      transition: background 0.2s;
-      text-decoration: none;
     }
-    .project-card:hover { background: #16161f; }
-    .project-card:hover .project-arrow { transform: translate(3px,-3px); }
-    .project-header { display: flex; align-items: flex-start; justify-content: space-between; }
-    .project-name {
-      font-family: 'Syne', sans-serif; font-weight: 700;
-      font-size: 1rem; color: var(--text); letter-spacing: -0.01em;
+    .carousel-track {
+      display: flex;
+      transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
     }
-    .project-arrow { color: var(--accent); font-size: 1.1rem; transition: transform 0.2s; flex-shrink: 0; }
-    .project-desc { color: var(--muted); font-size: 0.8rem; line-height: 1.7; flex: 1; }
-    .project-footer { display: flex; align-items: center; justify-content: space-between; margin-top: auto; padding-top: 0.75rem; border-top: 1px solid var(--border); }
-    .project-lang { font-size: 0.72rem; color: var(--muted); display: flex; align-items: center; gap: 0.4rem; }
-    .lang-dot { width: 8px; height: 8px; border-radius: 50%; background: #512bd4; flex-shrink: 0; }
-    .lang-dot.js { background: #f7df1e; }
-    .lang-dot.ts { background: #3178c6; }
-    .lang-dot.py { background: #3572a5; }
-    .lang-dot.html { background: #e34c26; }
-    .lang-dot.go { background: #00add8; }
-    .lang-dot.other { background: var(--muted); }
-    .project-stars { font-size: 0.72rem; color: var(--muted); display: flex; align-items: center; gap: 0.3rem; }
+    .carousel-slide {
+      min-width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .slide-image {
+      width: 100%; height: 360px;
+      object-fit: cover; object-position: top;
+      display: block;
+      background: var(--surface);
+    }
+    .slide-image-placeholder {
+      width: 100%; height: 360px;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--surface);
+      position: relative; overflow: hidden;
+    }
+    .slide-image-placeholder::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.02) 50%, transparent 60%);
+    }
+    .slide-lang-bg {
+      font-family: 'Syne', sans-serif;
+      font-size: 5rem; font-weight: 800;
+      opacity: 0.06; letter-spacing: -0.05em;
+      color: var(--text); text-align: center; padding: 1rem;
+      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    }
+    .slide-lang-icon {
+      width: 64px; height: 64px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1rem;
+      color: #000; position: relative; z-index: 1;
+    }
+    .slide-info {
+      padding: 2.5rem;
+      display: flex; flex-direction: column; justify-content: space-between;
+      border-left: 1px solid var(--border);
+    }
+    .slide-index {
+      font-size: 0.7rem; letter-spacing: 0.15em; color: var(--muted); text-transform: uppercase;
+    }
+    .slide-name {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: clamp(1.4rem, 3vw, 2rem); color: var(--text);
+      letter-spacing: -0.02em; margin: 0.75rem 0;
+    }
+    .slide-desc { color: var(--muted); font-size: 0.82rem; line-height: 1.8; flex: 1; }
+    .slide-meta {
+      margin-top: 1.5rem;
+      display: flex; align-items: center; gap: 1rem;
+      padding-top: 1rem; border-top: 1px solid var(--border);
+    }
+    .slide-lang-badge {
+      display: flex; align-items: center; gap: 0.4rem;
+      font-size: 0.75rem; color: var(--muted);
+    }
+    .slide-open {
+      margin-left: auto;
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--border); border-radius: 2px;
+      color: var(--accent); text-decoration: none;
+      font-size: 0.78rem; letter-spacing: 0.05em;
+      transition: all 0.2s;
+    }
+    .slide-open:hover { background: var(--accent-dim); border-color: var(--accent); }
+
+    /* Carousel controls */
+    .carousel-controls {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 1rem;
+    }
+    .carousel-arrows { display: flex; gap: 0.5rem; }
+    .carousel-btn {
+      width: 44px; height: 44px;
+      border: 1px solid var(--border); background: var(--card);
+      color: var(--text); font-size: 1.1rem;
+      display: flex; align-items: center; justify-content: center;
+      cursor: none; border-radius: 2px;
+      transition: all 0.2s;
+    }
+    .carousel-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* Progress bar */
+    .carousel-progress-wrap {
+      flex: 1; margin: 0 1.5rem;
+      height: 2px; background: var(--border); border-radius: 1px; overflow: hidden;
+    }
+    .carousel-progress-bar {
+      height: 100%; width: 0%;
+      background: var(--accent); border-radius: 1px;
+      transition: width 0.1s linear;
+    }
+    .carousel-counter {
+      font-size: 0.75rem; color: var(--muted); white-space: nowrap;
+    }
 
     .projects-loading, .projects-error {
-      grid-column: 1/-1; text-align: center;
-      padding: 4rem; color: var(--muted);
+      text-align: center; padding: 4rem; color: var(--muted);
     }
     .loading-dots span {
       display: inline-block; width: 6px; height: 6px;
@@ -212,6 +305,14 @@
     }
     .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
     .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+    @media (max-width: 768px) {
+      .carousel-slide { grid-template-columns: 1fr; }
+      .slide-image, .slide-image-placeholder { height: 200px; }
+      .slide-info { border-left: none; border-top: 1px solid var(--border); }
+      .about-grid { grid-template-columns: 1fr; }
+      .about-photo-wrap { margin: 0 auto; }
+    }
 
     /* CONTACT */
     .contact-inner {
@@ -317,6 +418,14 @@
       <h2 class="section-title">Who I Am</h2>
     </div>
     <div class="about-grid reveal">
+      <div class="about-photo-wrap">
+        <!-- Replace src with your photo file name once uploaded to GitHub repo -->
+        <!-- <img src="photo.jpg" alt="Duarte Silva" class="about-photo"> -->
+        <div class="about-photo-placeholder">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          <span>Add photo.jpg<br>to repo root</span>
+        </div>
+      </div>
       <div class="about-text">
         <p>
           I'm a <strong>.NET and Full Stack Developer</strong> with a focus on building
@@ -359,13 +468,27 @@
       <p class="section-label">// 02 — Projects</p>
       <h2 class="section-title">GitHub Work</h2>
     </div>
-    <div id="projects-grid" class="reveal">
-      <div class="projects-loading">
-        <div class="loading-dots"><span></span><span></span><span></span></div>
-        <p style="margin-top:1rem; font-size:0.8rem;">Fetching repos from GitHub...</p>
+    <div class="carousel-wrap reveal">
+      <div class="carousel-stage" id="carousel-stage">
+        <div class="carousel-track" id="carousel-track">
+          <div class="projects-loading" style="min-width:100%;padding:4rem;text-align:center;">
+            <div class="loading-dots"><span></span><span></span><span></span></div>
+            <p style="margin-top:1rem; font-size:0.8rem;">Fetching repos from GitHub...</p>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-controls" id="carousel-controls" style="display:none;">
+        <div class="carousel-arrows">
+          <button class="carousel-btn" id="btn-prev" aria-label="Previous">←</button>
+          <button class="carousel-btn" id="btn-next" aria-label="Next">→</button>
+        </div>
+        <div class="carousel-progress-wrap">
+          <div class="carousel-progress-bar" id="progress-bar"></div>
+        </div>
+        <span class="carousel-counter" id="carousel-counter">1 / 1</span>
       </div>
     </div>
-    <p style="margin-top:1.5rem; color:var(--muted); font-size:0.75rem;" class="reveal">
+    <p style="margin-top:1rem; color:var(--muted); font-size:0.75rem;" class="reveal">
       ↗ All public repositories — updated live via GitHub API
     </p>
   </div>
@@ -414,9 +537,9 @@
     cursor.style.left = e.clientX + 'px';
     cursor.style.top  = e.clientY + 'px';
   });
-  document.querySelectorAll('a, button, .skill-item, .project-card').forEach(el => {
-    el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
-    el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
+  document.addEventListener('mouseover', e => {
+    if (e.target.closest('a, button, .skill-item')) cursor.classList.add('hovering');
+    else cursor.classList.remove('hovering');
   });
 
   // ─── NAV SCROLL ───────────────────────────────────────────
@@ -431,59 +554,136 @@
   }, { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-  // ─── GITHUB PROJECTS ──────────────────────────────────────
+  // ─── GITHUB PROJECTS CAROUSEL ─────────────────────────────
   const GITHUB_USERNAME = 'Duartelisilva';
+  const AUTOPLAY_MS = 5000;
 
   const langColors = {
-    'C#': { cls: 'other', color: '#512bd4' },
-    'JavaScript': { cls: 'js', color: '#f7df1e' },
-    'TypeScript': { cls: 'ts', color: '#3178c6' },
-    'Python': { cls: 'py', color: '#3572a5' },
-    'HTML': { cls: 'html', color: '#e34c26' },
-    'Go': { cls: 'go', color: '#00add8' },
+    'C#': '#512bd4', 'JavaScript': '#f7df1e', 'TypeScript': '#3178c6',
+    'Python': '#3572a5', 'HTML': '#e34c26', 'Go': '#00add8',
+    'CSS': '#563d7c', 'Java': '#b07219', 'Rust': '#dea584',
   };
 
+  let repos = [], current = 0, timer = null, progressTimer = null, progressStart = null;
+
+  async function fetchReadmeImage(repo) {
+    try {
+      const res = await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${repo}/readme`, {
+        headers: { Accept: 'application/vnd.github.raw' }
+      });
+      if (!res.ok) return null;
+      const md = await res.text();
+      // Find first image in markdown: ![...](url) or <img src="url">
+      const mdImg = md.match(/!\[.*?\]\((https?:\/\/[^\s)]+)\)/);
+      if (mdImg) return mdImg[1];
+      const htmlImg = md.match(/<img[^>]+src=["'](https?:\/\/[^"']+)["']/i);
+      if (htmlImg) return htmlImg[1];
+      return null;
+    } catch { return null; }
+  }
+
+  function buildSlide(repo, index, total, imgUrl) {
+    const lang = repo.language || 'Other';
+    const color = langColors[lang] || '#6b6b78';
+    const desc = repo.description || 'No description provided.';
+
+    const imageBlock = imgUrl
+      ? `<img class="slide-image" src="${imgUrl}" alt="${repo.name}" loading="lazy" onerror="this.parentNode.innerHTML=buildFallback('${lang}','${color}')">`
+      : `<div class="slide-image-placeholder">
+           <div class="slide-lang-bg">${lang}</div>
+           <div class="slide-lang-icon" style="background:${color}">${lang.slice(0,2)}</div>
+         </div>`;
+
+    return `
+      <div class="carousel-slide">
+        ${imageBlock}
+        <div class="slide-info">
+          <div>
+            <div class="slide-index">${String(index+1).padStart(2,'0')} / ${String(total).padStart(2,'0')}</div>
+            <div class="slide-name">${repo.name}</div>
+            <p class="slide-desc">${desc}</p>
+          </div>
+          <div class="slide-meta">
+            <span class="slide-lang-badge">
+              <span style="width:8px;height:8px;border-radius:50%;background:${color};display:inline-block;flex-shrink:0;"></span>
+              ${lang}
+              ${repo.stargazers_count > 0 ? `&nbsp;·&nbsp; ★ ${repo.stargazers_count}` : ''}
+            </span>
+            <a class="slide-open" href="${repo.html_url}" target="_blank" rel="noopener">
+              Open ↗
+            </a>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  function goTo(idx) {
+    current = ((idx % repos.length) + repos.length) % repos.length;
+    document.getElementById('carousel-track').style.transform = `translateX(-${current * 100}%)`;
+    document.getElementById('carousel-counter').textContent = `${current + 1} / ${repos.length}`;
+    resetProgress();
+  }
+
+  function resetProgress() {
+    clearInterval(progressTimer);
+    const bar = document.getElementById('progress-bar');
+    bar.style.transition = 'none';
+    bar.style.width = '0%';
+    requestAnimationFrame(() => {
+      bar.style.transition = `width ${AUTOPLAY_MS}ms linear`;
+      bar.style.width = '100%';
+    });
+    clearTimeout(timer);
+    timer = setTimeout(() => goTo(current + 1), AUTOPLAY_MS);
+  }
+
   async function loadRepos() {
-    const grid = document.getElementById('projects-grid');
+    const track = document.getElementById('carousel-track');
+    const controls = document.getElementById('carousel-controls');
     try {
       const res = await fetch(
         `https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=30&type=public`
       );
-      if (!res.ok) throw new Error('GitHub API error');
-      const repos = await res.json();
-
-      // Filter out forks, sort by stars then updated
-      const filtered = repos
-        .filter(r => !r.fork)
+      if (!res.ok) throw new Error();
+      const all = await res.json();
+      repos = all.filter(r => !r.fork)
         .sort((a, b) => (b.stargazers_count - a.stargazers_count) || (new Date(b.updated_at) - new Date(a.updated_at)));
 
-      if (!filtered.length) {
-        grid.innerHTML = '<div class="projects-error">No public repositories found.</div>';
+      if (!repos.length) {
+        track.innerHTML = `<div class="projects-error" style="min-width:100%">No public repositories found.</div>`;
         return;
       }
 
-      grid.innerHTML = filtered.map(repo => {
-        const lang = repo.language || 'Other';
-        const lc = langColors[lang] || { color: '#6b6b78' };
-        const desc = repo.description || 'No description provided.';
-        return `
-          <a class="project-card" href="${repo.html_url}" target="_blank" rel="noopener">
-            <div class="project-header">
-              <span class="project-name">${repo.name}</span>
-              <span class="project-arrow">↗</span>
-            </div>
-            <p class="project-desc">${desc}</p>
-            <div class="project-footer">
-              <span class="project-lang">
-                <span style="width:8px;height:8px;border-radius:50%;background:${lc.color};flex-shrink:0;display:inline-block;"></span>
-                ${lang}
-              </span>
-              ${repo.stargazers_count > 0 ? `<span class="project-stars">★ ${repo.stargazers_count}</span>` : ''}
-            </div>
-          </a>`;
-      }).join('');
-    } catch (err) {
-      grid.innerHTML = `<div class="projects-error">
+      // Fetch README images in parallel (with a limit to avoid rate limiting)
+      const imgResults = await Promise.all(
+        repos.slice(0, 20).map(r => fetchReadmeImage(r.name))
+      );
+      // For repos beyond 20, no image
+      while (imgResults.length < repos.length) imgResults.push(null);
+
+      track.innerHTML = repos.map((r, i) => buildSlide(r, i, repos.length, imgResults[i])).join('');
+      controls.style.display = 'flex';
+
+      document.getElementById('btn-prev').addEventListener('click', () => goTo(current - 1));
+      document.getElementById('btn-next').addEventListener('click', () => goTo(current + 1));
+
+      // Pause on hover
+      document.getElementById('carousel-stage').addEventListener('mouseenter', () => {
+        clearTimeout(timer);
+        clearInterval(progressTimer);
+        document.getElementById('progress-bar').style.transition = 'none';
+      });
+      document.getElementById('carousel-stage').addEventListener('mouseleave', () => resetProgress());
+
+      // Keyboard
+      document.addEventListener('keydown', e => {
+        if (e.key === 'ArrowLeft') goTo(current - 1);
+        if (e.key === 'ArrowRight') goTo(current + 1);
+      });
+
+      goTo(0);
+    } catch {
+      track.innerHTML = `<div class="projects-error" style="min-width:100%;padding:4rem;text-align:center;color:var(--muted)">
         Could not load repositories.<br>
         <a href="https://github.com/${GITHUB_USERNAME}" target="_blank" style="color:var(--accent)">View on GitHub ↗</a>
       </div>`;
