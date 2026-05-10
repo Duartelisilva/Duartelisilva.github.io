@@ -98,10 +98,10 @@
     }
     .hero-name {
       font-family: 'Syne', sans-serif;
-      font-size: clamp(3.5rem, 8vw, 7rem);
+      font-size: clamp(2.8rem, 5.5vw, 5.5rem);
       font-weight: 800;
-      line-height: 0.95;
-      letter-spacing: -0.03em;
+      line-height: 1.0;
+      letter-spacing: -0.02em;
       color: var(--text);
       animation: fadeUp 0.6s 0.1s ease both;
     }
@@ -451,6 +451,8 @@
           <div class="skill-item"><span class="skill-dot"></span> React</div>
           <div class="skill-item"><span class="skill-dot"></span> HTML / CSS</div>
           <div class="skill-item"><span class="skill-dot"></span> Git / GitHub</div>
+          <div class="skill-item"><span class="skill-dot"></span> Docker</div>
+          <div class="skill-item"><span class="skill-dot"></span> Azure</div>
         </div>
       </div>
     </div>
@@ -511,13 +513,17 @@
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
           GitHub
         </a>
-        <a href="mailto:your@email.com" class="contact-link">
+        <a href="mailto:YOUR_EMAIL@example.com" class="contact-link">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
           Email
         </a>
         <a href="https://linkedin.com/in/YOUR_LINKEDIN" target="_blank" class="contact-link">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
           LinkedIn
+        </a>
+        <a href="cv.pdf" download="Duarte_Silva_CV.pdf" class="contact-link" style="border-color:var(--accent);color:var(--accent);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download CV
         </a>
       </div>
     </div>
@@ -552,78 +558,79 @@
   }, { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-  // ─── GITHUB PROJECTS CAROUSEL ─────────────────────────────
-  const GITHUB_USERNAME = 'Duartelisilva';
-  const AUTOPLAY_MS = 5000;
+  // ─── HARDCODED PROJECTS (images: drop files in repo root and set paths below) ─
+  const projects = [
+    {
+      name: 'DigitalTwin',
+      url: 'https://github.com/Duartelisilva/DigitalTwin',
+      lang: 'C#',
+      image: 'img/digitaltwin.png', // replace with your screenshot filename
+      desc: 'Master\'s thesis project — a real-time Digital Twin built in Unity simulating multiple 1:43 scale race cars on a track. Focused on data-driven simulation, physics accuracy, and live state synchronisation between the physical and virtual models.'
+    },
+    {
+      name: 'NoOneAwaits',
+      url: 'https://github.com/Duartelisilva/NoOneAwaits',
+      lang: 'C#',
+      image: 'img/nooneawaits.png',
+      desc: 'A short solo horror game built in Unity. Developed entirely independently, it served as a deep dive into C# game scripting, Unity\'s event system, atmosphere design, and interactive narrative — all within a single cohesive experience.'
+    },
+    {
+      name: 'MediaTracker',
+      url: 'https://github.com/Duartelisilva/MediaTracker',
+      lang: 'C#',
+      image: 'img/mediatracker.png',
+      desc: 'A desktop app for organising and tracking movies, TV series, and books. Features a card-based dark-mode UI with inline editing, franchise grouping, watch/read date logging, favourites, search, and duplicate prevention — all built in C#.'
+    },
+    {
+      name: 'SkillPath',
+      url: 'https://github.com/Duartelisilva/SkillPath',
+      lang: 'C#',
+      image: 'img/skillpath.png',
+      desc: 'A structured .NET application following Clean Architecture principles — split across Domain, Application, and Infrastructure layers. Built to explore layered design patterns, separation of concerns, and maintainable backend architecture in C#.'
+    },
+  ];
 
   const langColors = {
     'C#': '#512bd4', 'JavaScript': '#f7df1e', 'TypeScript': '#3178c6',
     'Python': '#3572a5', 'HTML': '#e34c26', 'Go': '#00add8',
-    'CSS': '#563d7c', 'Java': '#b07219', 'Rust': '#dea584',
   };
 
-  let repos = [], current = 0, timer = null, progressTimer = null, progressStart = null;
+  const AUTOPLAY_MS = 5000;
+  let current = 0, timer = null;
 
-  async function fetchReadmeImage(repo) {
-    try {
-      const res = await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${repo}/readme`, {
-        headers: { Accept: 'application/vnd.github.raw' }
-      });
-      if (!res.ok) return null;
-      const md = await res.text();
-      // Find first image in markdown: ![...](url) or <img src="url">
-      const mdImg = md.match(/!\[.*?\]\((https?:\/\/[^\s)]+)\)/);
-      if (mdImg) return mdImg[1];
-      const htmlImg = md.match(/<img[^>]+src=["'](https?:\/\/[^"']+)["']/i);
-      if (htmlImg) return htmlImg[1];
-      return null;
-    } catch { return null; }
-  }
-
-  function buildSlide(repo, index, total, imgUrl) {
-    const lang = repo.language || 'Other';
-    const color = langColors[lang] || '#6b6b78';
-    const desc = repo.description || 'No description provided.';
-
-    const imageBlock = imgUrl
-      ? `<img class="slide-image" src="${imgUrl}" alt="${repo.name}" loading="lazy" onerror="this.parentNode.innerHTML=buildFallback('${lang}','${color}')">`
-      : `<div class="slide-image-placeholder">
-           <div class="slide-lang-bg">${lang}</div>
-           <div class="slide-lang-icon" style="background:${color}">${lang.slice(0,2)}</div>
-         </div>`;
-
+  function buildSlide(p, index, total) {
+    const color = langColors[p.lang] || '#6b6b78';
+    const imageBlock = `<img class="slide-image" src="${p.image}" alt="${p.name}" loading="lazy"
+      onerror="this.outerHTML='<div class=\'slide-image-placeholder\'><div class=\'slide-lang-bg\'>${p.lang}</div><div class=\'slide-lang-icon\' style=\'background:${color}\'>${p.lang.slice(0,2)}</div></div>'"
+    >`;
     return `
       <div class="carousel-slide">
         ${imageBlock}
         <div class="slide-info">
           <div>
             <div class="slide-index">${String(index+1).padStart(2,'0')} / ${String(total).padStart(2,'0')}</div>
-            <div class="slide-name">${repo.name}</div>
-            <p class="slide-desc">${desc}</p>
+            <div class="slide-name">${p.name}</div>
+            <p class="slide-desc">${p.desc}</p>
           </div>
           <div class="slide-meta">
             <span class="slide-lang-badge">
               <span style="width:8px;height:8px;border-radius:50%;background:${color};display:inline-block;flex-shrink:0;"></span>
-              ${lang}
-              ${repo.stargazers_count > 0 ? `&nbsp;·&nbsp; ★ ${repo.stargazers_count}` : ''}
+              ${p.lang}
             </span>
-            <a class="slide-open" href="${repo.html_url}" target="_blank" rel="noopener">
-              Open ↗
-            </a>
+            <a class="slide-open" href="${p.url}" target="_blank" rel="noopener">Open ↗</a>
           </div>
         </div>
       </div>`;
   }
 
   function goTo(idx) {
-    current = ((idx % repos.length) + repos.length) % repos.length;
+    current = ((idx % projects.length) + projects.length) % projects.length;
     document.getElementById('carousel-track').style.transform = `translateX(-${current * 100}%)`;
-    document.getElementById('carousel-counter').textContent = `${current + 1} / ${repos.length}`;
+    document.getElementById('carousel-counter').textContent = `${current + 1} / ${projects.length}`;
     resetProgress();
   }
 
   function resetProgress() {
-    clearInterval(progressTimer);
     const bar = document.getElementById('progress-bar');
     bar.style.transition = 'none';
     bar.style.width = '0%';
@@ -635,60 +642,26 @@
     timer = setTimeout(() => goTo(current + 1), AUTOPLAY_MS);
   }
 
-  async function loadRepos() {
+  function initCarousel() {
     const track = document.getElementById('carousel-track');
     const controls = document.getElementById('carousel-controls');
-    try {
-      const res = await fetch(
-        `https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=30&type=public`
-      );
-      if (!res.ok) throw new Error();
-      const all = await res.json();
-      repos = all.filter(r => !r.fork)
-        .sort((a, b) => (b.stargazers_count - a.stargazers_count) || (new Date(b.updated_at) - new Date(a.updated_at)));
-
-      if (!repos.length) {
-        track.innerHTML = `<div class="projects-error" style="min-width:100%">No public repositories found.</div>`;
-        return;
-      }
-
-      // Fetch README images in parallel (with a limit to avoid rate limiting)
-      const imgResults = await Promise.all(
-        repos.slice(0, 20).map(r => fetchReadmeImage(r.name))
-      );
-      // For repos beyond 20, no image
-      while (imgResults.length < repos.length) imgResults.push(null);
-
-      track.innerHTML = repos.map((r, i) => buildSlide(r, i, repos.length, imgResults[i])).join('');
-      controls.style.display = 'flex';
-
-      document.getElementById('btn-prev').addEventListener('click', () => goTo(current - 1));
-      document.getElementById('btn-next').addEventListener('click', () => goTo(current + 1));
-
-      // Pause on hover
-      document.getElementById('carousel-stage').addEventListener('mouseenter', () => {
-        clearTimeout(timer);
-        clearInterval(progressTimer);
-        document.getElementById('progress-bar').style.transition = 'none';
-      });
-      document.getElementById('carousel-stage').addEventListener('mouseleave', () => resetProgress());
-
-      // Keyboard
-      document.addEventListener('keydown', e => {
-        if (e.key === 'ArrowLeft') goTo(current - 1);
-        if (e.key === 'ArrowRight') goTo(current + 1);
-      });
-
-      goTo(0);
-    } catch {
-      track.innerHTML = `<div class="projects-error" style="min-width:100%;padding:4rem;text-align:center;color:var(--muted)">
-        Could not load repositories.<br>
-        <a href="https://github.com/${GITHUB_USERNAME}" target="_blank" style="color:var(--accent)">View on GitHub ↗</a>
-      </div>`;
-    }
+    track.innerHTML = projects.map((p, i) => buildSlide(p, i, projects.length)).join('');
+    controls.style.display = 'flex';
+    document.getElementById('btn-prev').addEventListener('click', () => goTo(current - 1));
+    document.getElementById('btn-next').addEventListener('click', () => goTo(current + 1));
+    document.getElementById('carousel-stage').addEventListener('mouseenter', () => {
+      clearTimeout(timer);
+      document.getElementById('progress-bar').style.transition = 'none';
+    });
+    document.getElementById('carousel-stage').addEventListener('mouseleave', () => resetProgress());
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowLeft') goTo(current - 1);
+      if (e.key === 'ArrowRight') goTo(current + 1);
+    });
+    goTo(0);
   }
 
-  loadRepos();
+  initCarousel();
 </script>
 </body>
 </html>
