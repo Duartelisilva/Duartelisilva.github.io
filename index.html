@@ -500,7 +500,12 @@
 <footer>
   <p>© 2026 Duarte Silva — Built with GitHub Pages</p>
 </footer>
-
+  
+  <div id="lightbox" class="lightbox">
+    <span class="lightbox-close">&times;</span>
+    <img id="lightbox-img" src="" alt="">
+  </div>
+  
 <script>
   const cursor = document.getElementById('cursor');
   document.addEventListener('mousemove', e => {
@@ -618,10 +623,13 @@
     });
     goTo(0);
   }
+   
+  initCarousel();
+  
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = document.getElementById('lightbox-img');
   const closeBtn = document.querySelector('.lightbox-close');
-  
+
   // open on image click
   document.addEventListener('click', (e) => {
     if (e.target.classList.contains('slide-image')) {
@@ -646,13 +654,6 @@
       lightbox.style.display = 'none';
     }
   });
-  
-  initCarousel();
 </script>
-  
-  <div id="lightbox" class="lightbox">
-    <span class="lightbox-close">&times;</span>
-    <img id="lightbox-img" src="" alt="">
-  </div>
 </body>
 </html>
