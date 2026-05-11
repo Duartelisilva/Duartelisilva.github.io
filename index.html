@@ -164,8 +164,15 @@
     .about-text strong { color: var(--text); }
     .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
     .skill-item {
+      display: flex;
+      align-items: center;
+      padding: 0.55rem 0.85rem 0.55rem 1.15rem;
       background: var(--surface);
+      border: 1px solid var(--border);
       border-left: 2px solid var(--accent);
+      border-radius: 2px;
+      font-size: 0.78rem;
+      color: var(--muted);
       user-select: none;
       cursor: default;
     }
